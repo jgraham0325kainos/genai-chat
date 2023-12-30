@@ -1,8 +1,7 @@
 .answerContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    padding: 8.1285px;
     gap: 5.42px;
     background: #FFFFFF;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
@@ -28,7 +27,7 @@
 
 .answerFooter {
     display: flex;
-    flex-flow: row nowrap;
+    flex: none;
     width: 100%;
     height: auto;
     box-sizing: border-box;
@@ -55,11 +54,11 @@
     flex-grow: 0;
 }
 
-.citationContainer {
-    margin-left: 10px;
+.citationHeaderLink {
+    margin-left: 0px;
     font-style: normal;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 16px;
     line-height: 16px;
 
     color: #115EA3;
@@ -68,11 +67,16 @@
     align-items: center;
     padding: 4px 6px;
     gap: 4px;
-    border: 1px solid #D1D1D1;
-    border-radius: 4px;
+
 }
 
-.citationContainer:hover {
+.citationContainer {
+    border: 1px solid #D1D1D1;
+    border-radius: 4px;
+    padding: 4px
+}
+
+.citationHeaderLink:hover {
     text-decoration: underline;
     cursor: pointer;
 }
