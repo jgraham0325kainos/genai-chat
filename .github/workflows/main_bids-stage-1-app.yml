@@ -32,20 +32,3 @@ jobs:
         docker tag jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:latest;
         docker push jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
         docker push jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:latest;
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-    - name: Deploy to Azure Web App
-      id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'bids-stage-1-app'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_088bd34fc1e649f1bace03430307ebd1 }}
-        images: 'jgchatappacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_35cf4e76b0424c65a32ffeee6d5ae5f5 }}/sample-app-aoai-chatgpt:${{ github.sha }}'
