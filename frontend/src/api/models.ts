@@ -10,9 +10,13 @@ export type Citation = {
     title: string | null;
     filepath: string | null;
     url: string | null;
-    metadata: string | null;
+    metadata: CitationMetadata | null;
     chunk_id: string | null;
     reindex_id: string | null;
+}
+
+export type CitationMetadata = {
+    chunking: string | null;
 }
 
 export type ToolMessageContent = {

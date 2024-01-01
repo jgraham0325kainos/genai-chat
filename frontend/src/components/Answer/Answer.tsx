@@ -36,6 +36,29 @@ export const Answer = ({
         setChevronIsExpanded(isRefAccordionOpen);
     }, [isRefAccordionOpen]);
 
+    const extractRelevanceScore = (citation: Citation) => {
+
+        if (!citation || !citation.metadata || !citation.metadata.chunking) {
+            return null;
+        }
+
+        //e.g. of this: orignal document size=321. Scores=3.374172Org Highlight count=7.
+        const input = citation.metadata?.chunking 
+
+        // Regular expression to find 'Scores=' followed by numbers (and possibly a decimal point)
+        const regex = /Scores=(\d+(\.\d+)?)/;
+        const matches = input.match(regex);
+
+        // Check if we found a match
+        if (matches && matches[1]) {
+            // Parse and return the number
+            return parseFloat(matches[1]);
+        } else {
+            // Return null if no match was found
+            return null;
+        }
+    }
+
     const createCitationFilepath = (citation: Citation, index: number, truncate: boolean = false) => {
         let citationFilename = "";
 
@@ -82,6 +105,7 @@ export const Answer = ({
                                             {createCitationFilepath(citation, idx, true)}
 
                                         </span>
+                                        <span>Search result relevance: {extractRelevanceScore(citation)}</span>
                                         <div>
                                             <ReactMarkdown
                                                 linkTarget="_blank"
