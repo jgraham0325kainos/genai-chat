@@ -25,13 +25,13 @@ jobs:
         registry: https://jgchatappacr.azurecr.io/
         username: ${{ secrets.AzureAppService_ContainerUsername_35cf4e76b0424c65a32ffeee6d5ae5f5 }}
         password: ${{ secrets.AzureAppService_ContainerPassword_cbe6991983c44ee8822f4d1968d55da3 }}
-
-    - name: Build and push container image to registry
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: jgchatappacr.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_35cf4e76b0424c65a32ffeee6d5ae5f5 }}/sample-app-aoai-chatgpt:${{ github.sha }}
-        file: ./Dockerfile
+    
+    - name: Build the Docker image
+      run:         
+        docker build . --file WebApp.Dockerfile --tag jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
+        docker tag jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:latest;
+        docker push jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:$(date +'%Y-%m-%d')_$GITHUB_RUN_NUMBER;
+        docker push jgchatappacr.azurecr.io/sample-app-aoai-chatgpt:latest;
 
   deploy:
     runs-on: ubuntu-latest
