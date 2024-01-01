@@ -43,7 +43,7 @@ export const Answer = ({
         }
 
         //e.g. of this: orignal document size=321. Scores=3.374172Org Highlight count=7.
-        const input = citation.metadata?.chunking 
+        const input = citation.metadata?.chunking
 
         // Regular expression to find 'Scores=' followed by numbers (and possibly a decimal point)
         const regex = /Scores=(\d+(\.\d+)?)/;
@@ -105,7 +105,13 @@ export const Answer = ({
                                             {createCitationFilepath(citation, idx, true)}
 
                                         </span>
-                                        <span>Search result relevance: {extractRelevanceScore(citation)}</span>
+                                        {/* Only show relevance score if it's available. 
+                                        Doesn't get returned when AZURE_SEARCH_QUERY_TYPE=vectorSemanticHybrid but does for simple */}
+                                        {
+                                            extractRelevanceScore(citation) != null && (
+                                                <span>Search result relevance: {extractRelevanceScore(citation)}</span>
+                                            )
+                                        }
                                         <div>
                                             <ReactMarkdown
                                                 linkTarget="_blank"
